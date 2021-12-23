@@ -1,15 +1,26 @@
+/*
+Au chargement de la page appel de la fonction asynchrone fill section
+*/
 window.onload = fillSection();
 const urlproduct = "http://localhost:3000/api/products";
-
+/*
+Fonction asynchrone permettant de récupéré les articles dans l'api
+*/
 async function getArticles() {
     let articlesCatch = await fetch(urlproduct)
     return await articlesCatch.json();
 }
+/*
+Fonction asynchrone qui appel getlistproduct une fois le chargement effectuée 
+*/
 async function fillSection() {
     setTimeout(() => {
         getListProduct;
       }, 500);
 }
+/*
+Promise avec un timer permettant d'afficher la list des produit 
+*/
 const getListProduct = new Promise((resolve, reject) => {
     setTimeout(() => {
         let result = getArticles ()
