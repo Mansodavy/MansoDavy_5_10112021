@@ -1,6 +1,12 @@
+/*
+Récupération de tout les item dans le local storage "produit".
+*/
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
 console.table(produitLocalStorage);
 const positionEmptyCart = document.querySelector("#cart__items");
+/*
+Fonction permettant de récupérer et afficher les articles du locatstorage sur la page cart .
+*/
 function getCart() {
   for (let produit in produitLocalStorage) {
     let ArticleContainer = document.querySelector("#cart__items");
@@ -32,7 +38,9 @@ function getCart() {
   }
 }
 getCart();
-
+/*
+Fonction permetant de Supprimer des articles dans le panier  .
+*/
 function deleteItem() {
   let deletebutton = document.querySelectorAll(".deleteItem");
   let elementquantitys = document.querySelector(".itemQuantity");
@@ -67,7 +75,9 @@ function deleteItem() {
   }
 }
 deleteItem();
-
+/*
+Fonction permetant de modifier la quantité dans le panier .
+*/
 function modifyQuantity() {
   let quantityModif = document.getElementsByClassName("itemQuantity");
   for (let k = 0; k < quantityModif.length; k++) {
@@ -92,7 +102,9 @@ function modifyQuantity() {
   }}
 modifyQuantity();
 
-
+/*
+Fonction permetant de calculer le total du montant en euro et des articles dans le panier .
+*/
 function total() {
   let elementquantity = document.querySelectorAll(".itemQuantity");
   if (elementquantity === null) {
@@ -116,6 +128,9 @@ function total() {
 }
 total();
 
+/*
+Partie Qui vérifie les champs texte grace a l'utilisation des regex
+*/
 function form() {
   let form = document.querySelector(".cart__order__form");
 
@@ -143,14 +158,16 @@ function form() {
   form.email.addEventListener("change", function () {
     validEmail(this);
   });
-
+  
   const validFirstName = function (inputFirstName) {
     let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
     if (UserRegex.test(inputFirstName.value)) {
       firstNameErrorMsg.innerHTML = "";
+      return true;
     } else {
       firstNameErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
+      return false;
     }
   };
 
@@ -159,8 +176,10 @@ function form() {
 
     if (UserRegex.test(inputLastName.value)) {
       lastNameErrorMsg.innerHTML = "";
+      return true;
     } else {
       lastNameErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
+      return false;
     }
   };
 
@@ -169,9 +188,12 @@ function form() {
 
     if (AddressRegex.test(inputAddress.value)) {
       addressErrorMsg.innerHTML = "";
+      return true;
     } else {
       addressErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
+      return false;
     }
+
   };
 
   const validCity = function (inputCity) {
@@ -179,72 +201,80 @@ function form() {
 
     if (UserRegex.test(inputCity.value)) {
       cityErrorMsg.innerHTML = "";
+      return true;
     } else {
       cityErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
+      return false;
     }
   };
 
-  const validEmail = function (inputEmail) {
-    let emailErrorMsg = inputEmail.nextElementSibling;
+  const validEmail = function (inputMail) {
+    let emailErrorMsg = inputMail.nextElementSibling;
 
-    if (emailRegex.test(inputEmail.value)) {
+    if (emailRegex.test(inputMail.value)) {
       emailErrorMsg.innerHTML = "";
+      return true;
     } else {
       emailErrorMsg.innerHTML = "Veuillez renseigner votre email.";
+      return false;
     }
   };
 }
 form();
-
+/*
+Fonction permetant d'envoyer la requete post d'achat du panier avec vérification de complétion des champs de texte
+*/
 function postForm() {
-  const button_order = document.getElementById("order");
 
-  button_order.addEventListener("click", (event) => {
-    let inputName = document.getElementById("firstName");
-    let inputLastName = document.getElementById("lastName");
-    let inputAdress = document.getElementById("address");
-    let inputCity = document.getElementById("city");
-    let inputMail = document.getElementById("email");
-    let idProducts = [];
-    for (let i = 0; i < produitLocalStorage.length; i++) {
-      idProducts.push(produitLocalStorage[i].idProduit);
-    }
-    console.log(idProducts);
-
-    const order = {
-      contact: {
-        firstName: inputName.value,
-        lastName: inputLastName.value,
-        address: inputAdress.value,
-        city: inputCity.value,
-        email: inputMail.value,
-      },
-      products: idProducts,
-    };
-
-    const options = {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch("http://localhost:3000/api/products/order", options)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        localStorage.clear();
-        localStorage.setItem("orderId", data.orderId);
-        document.location.href = "confirmation.html?id=" + data.orderId;
-      })
-      .catch((err) => {
-        alert("Problème avec fetch : " + err.message);
-      });
-  });
-}
+  const button_order = document.getElementById("order")
+    button_order.addEventListener("click", (event) => {
+      let inputName = document.getElementById("firstName");
+      let inputLastName = document.getElementById("lastName");
+      let inputAdress = document.getElementById("address");
+      let inputCity = document.getElementById("city");
+      let inputMail = document.getElementById("email");
+      let idProducts = [];
+      for (let i = 0; i < produitLocalStorage.length; i++) {
+        idProducts.push(produitLocalStorage[i].idProduit);
+      }
+      console.log(idProducts);
+  
+      const order = {
+        contact: {
+          firstName: inputName.value,
+          lastName: inputLastName.value,
+          address: inputAdress.value,
+          city: inputCity.value,
+          email: inputMail.value,
+        },
+        products: idProducts,
+      };
+  
+      const options = {
+        method: "POST",
+        body: JSON.stringify(order),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      };
+    
+      fetch("http://localhost:3000/api/products/order", options)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          window.localStorage.clear();
+          document.location.href = "confirmation.html?id=" + data.orderId;
+        })
+        .catch((err) => {
+          alert("Problème avec fetch : " + err.message);
+        });
+    });
+  }
 postForm();
+/*
+Fonction permetant de clear le local storage (utile pour les test)
+*/
 function clearlocalstorage() {
   window.localStorage.clear();
   location.reload();

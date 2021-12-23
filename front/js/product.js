@@ -1,3 +1,6 @@
+/*
+Déclaration de la variable article et récupération de l'id dans l'url 
+*/
 let article = "";
 let str = window.location.href;
 let url = new URL(str);
@@ -7,7 +10,9 @@ const urlproduct = "http://localhost:3000/api/products/";
 const colorArticles = document. querySelector("#colors");
 const quantityArticles = document.querySelector("#quantity");
 getArticle();
-
+/*
+Fonction qui récupére les articles dans l'api 
+*/
 function getArticle() {
   fetch(urlproduct + urlsearchparmid)
   .then((res) => {
@@ -22,11 +27,13 @@ function getArticle() {
       }
   })
   .catch((error) => {
-      console.log("Erreur de la requête API");
+      window.alert("Erreur ! La requete a l'api a eu un probleme");
       document.location.href = "index.html"
   })
 }
-  
+/*
+Fonction qui prend les articles récupérer avec l'api et les place avec l'innerhtml
+*/ 
 function GrabArticles(article){
   let ArticleImg = document.querySelector(".item__img");
   ArticleImg.innerHTML = `<img src="${article.imageUrl}" alt="${article.altTxt}"><img>`;
@@ -43,17 +50,31 @@ function GrabArticles(article){
   }
   addCart(article);
 }
-
+/*
+Fonction qui permet l'ajout au panier grace a l'evenement click sur le bouton btncart
+*/ 
 function addCart(article) {
   const BtnCart = document.querySelector("#addToCart");
 
   BtnCart.addEventListener("click", (event)=>{
+/*
+Alert empéchant la non séléction d'élément
+*/
+    if (quantityArticles.value < 1 ){
+      window.alert("Erreur ! Veuillez choisir une quantité !");
+    }
+    else if (colorArticles.selectedIndex < 1){
+      window.alert("Erreur ! Veuillez choisir une couleur !");
+    }
       if (quantityArticles.value > 0 && quantityArticles.value <=100 && colorArticles.selectedIndex > 0){
 
+        
   let choiceColor = colorArticles.value;
               
   let choiceQuantity = quantityArticles.value;
-
+/*
+Paramétrage de chaques informations du produits
+*/
   let optionsProduit = {
       idProduit: urlsearchparmid,
       couleurProduit: choiceColor,
@@ -66,7 +87,10 @@ function addCart(article) {
   };
 
   let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
-
+  
+/*
+Vérification dans le localstorage les élément et les couleurs pour pouvoir faire les adition 
+*/
   if (produitLocalStorage) {
     const resultFind = produitLocalStorage.find(
         (resultat) => resultat.idProduit === urlsearchparmid && resultat.couleurProduit === choiceColor);
@@ -87,5 +111,7 @@ function addCart(article) {
         localStorage.setItem("produit", JSON.stringify(produitLocalStorage));
         window.location.href ="cart.html";
     }}
+    
     });
+    
 }
