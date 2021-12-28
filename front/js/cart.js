@@ -2,7 +2,6 @@
 Récupération de tout les item dans le local storage "produit".
 */
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
-console.table(produitLocalStorage);
 const positionEmptyCart = document.querySelector("#cart__items");
 /*
 Fonction permettant de récupérer et afficher les articles du locatstorage sur la page cart .
@@ -131,103 +130,111 @@ total();
 /*
 Partie Qui vérifie les champs texte grace a l'utilisation des regex
 */
-function form() {
-  let form = document.querySelector(".cart__order__form");
 
-  let emailRegex = new RegExp(
-    "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$"
-  );
-  let UserRegex = new RegExp("[a-zA-Z]+");
-  let AddressRegex = new RegExp("[0-9]+ ([a-zA-Z]+( [a-zA-Z]+)+)");
+let form = document.querySelector(".cart__order__form");
 
-  form.firstName.addEventListener("change", function () {
-    validFirstName(this);
-  });
+let validEmail = false;
+let validCity = false;
+let validAddress = false;
+let validLastName = false;
+let validFirstName = false;
 
-  form.lastName.addEventListener("change", function () {
-    validLastName(this);
-  });
+let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
+let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
+let addressErrorMsg = document.getElementById("addressErrorMsg");
+let cityErrorMsg = document.getElementById("cityErrorMsg");
+let emailErrorMsg = document.getElementById("emailErrorMsg");
 
-  form.address.addEventListener("change", function () {
-    validAddress(this);
-  });
 
-  form.city.addEventListener("change", function () {
-    validCity(this);
-  });
-  form.email.addEventListener("change", function () {
-    validEmail(this);
-  });
-  
-  const validFirstName = function (inputFirstName) {
-    let firstNameErrorMsg = inputFirstName.nextElementSibling;
+form.firstName.addEventListener("input", function () {
+  let reg = /[a-zA-Z]+/;
+  let str = form.firstName.value;
+  if(reg.test(str)) {
+    validFirstName = true;
+  }
+})
 
-    if (UserRegex.test(inputFirstName.value)) {
-      firstNameErrorMsg.innerHTML = "";
-      return true;
-    } else {
-      firstNameErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
-      return false;
-    }
-  };
+form.lastName.addEventListener("input", function () {
+  let reg = /[a-zA-Z]+/;
+  let str = form.lastName.value;
+  if(reg.test(str)) {
+    validLastName = true;
+  }
+})
 
-  const validLastName = function (inputLastName) {
-    let lastNameErrorMsg = inputLastName.nextElementSibling;
+form.address.addEventListener("input", function () {
+  let reg = /[0-9]+ ([a-zA-Z]+( [a-zA-Z]+)+)/;
+  let str = form.address.value;
+  if(reg.test(str)) {
+    validAddress = true;
+  }
+})
 
-    if (UserRegex.test(inputLastName.value)) {
-      lastNameErrorMsg.innerHTML = "";
-      return true;
-    } else {
-      lastNameErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
-      return false;
-    }
-  };
+form.city.addEventListener("input", function () {
+  let reg = /[a-zA-Z]+/;
+  let str = form.city.value;
+  if(reg.test(str)) {
+    validCity = true;
+  }
+  else {
+    validCity = false;
+  }
+})
 
-  const validAddress = function (inputAddress) {
-    let addressErrorMsg = inputAddress.nextElementSibling;
+form.email.addEventListener("input", function () {
+  let reg = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+  let str = form.email.value;
+  if(reg.test(str)) {
+    validEmail = true;
+  }
+  else {
+    validEmail = false;
+    
+  }
+})
+let button_order = document.getElementById("order")
+button_order.addEventListener("click", (event) => {
+  event.preventDefault();
 
-    if (AddressRegex.test(inputAddress.value)) {
-      addressErrorMsg.innerHTML = "";
-      return true;
-    } else {
-      addressErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
-      return false;
-    }
-
-  };
-
-  const validCity = function (inputCity) {
-    let cityErrorMsg = inputCity.nextElementSibling;
-
-    if (UserRegex.test(inputCity.value)) {
-      cityErrorMsg.innerHTML = "";
-      return true;
-    } else {
-      cityErrorMsg.innerHTML = "Veuillez renseigner ce champ.";
-      return false;
-    }
-  };
-
-  const validEmail = function (inputMail) {
-    let emailErrorMsg = inputMail.nextElementSibling;
-
-    if (emailRegex.test(inputMail.value)) {
-      emailErrorMsg.innerHTML = "";
-      return true;
-    } else {
-      emailErrorMsg.innerHTML = "Veuillez renseigner votre email.";
-      return false;
-    }
-  };
-}
-form();
+  if (validAddress === true && validLastName === true && validFirstName === true && validEmail === true  && validCity === true ) {
+    postForm();
+  }
+  if (validEmail === false ) {
+    emailErrorMsg.innerHTML = `<p>Le champ email est mal renseigner</p>`;
+  }
+  else if (validEmail === true) {
+    emailErrorMsg.innerHTML = `<p></p>`;
+  }
+  if (validAddress === false ) {
+    addressErrorMsg.innerHTML = `<p>Le champ Address est mal renseigner</p>`;
+  }
+  else if (validAddress === true) {
+    addressErrorMsg.innerHTML = `<p></p>`;
+  }
+  if (validCity === false ) {
+    cityErrorMsg.innerHTML = `<p>Le champ Ville est mal renseigner</p>`;
+  }
+  else if (validCity === true) {
+    cityErrorMsg.innerHTML = `<p></p>`;
+  }
+  if (validLastName === false ) {
+    lastNameErrorMsg.innerHTML = `<p>Le champ Nom est mal renseigner</p>`;
+  }
+  else if (validLastName === true) {
+    lastNameErrorMsg.innerHTML = `<p></p>`;
+  }
+  if (validFirstName === false ) {
+    firstNameErrorMsg.innerHTML = `<p>Le champ Prénom est mal renseigner</p>`;
+  }
+  else if (validFirstName === true) {
+    firstNameErrorMsg.innerHTML = `<p></p>`;
+  }
+});
 /*
+
 Fonction permetant d'envoyer la requete post d'achat du panier avec vérification de complétion des champs de texte
 */
 function postForm() {
-
-  const button_order = document.getElementById("order")
-    button_order.addEventListener("click", (event) => {
       let inputName = document.getElementById("firstName");
       let inputLastName = document.getElementById("lastName");
       let inputAdress = document.getElementById("address");
@@ -269,9 +276,8 @@ function postForm() {
         .catch((err) => {
           alert("Problème avec fetch : " + err.message);
         });
-    });
-  }
-postForm();
+    }
+
 /*
 Fonction permetant de clear le local storage (utile pour les test)
 */
