@@ -1,3 +1,4 @@
+
 /*
 Récupération de tout les item dans le local storage "produit".
 */
@@ -195,39 +196,43 @@ form.email.addEventListener("input", function () {
 let button_order = document.getElementById("order")
 button_order.addEventListener("click", (event) => {
   event.preventDefault();
-
-  if (validAddress === true && validLastName === true && validFirstName === true && validEmail === true  && validCity === true ) {
-    postForm();
-  }
-  if (validEmail === false ) {
-    emailErrorMsg.innerHTML = `<p>Le champ email est mal renseigner</p>`;
-  }
-  else if (validEmail === true) {
-    emailErrorMsg.innerHTML = `<p></p>`;
-  }
-  if (validAddress === false ) {
-    addressErrorMsg.innerHTML = `<p>Le champ Address est mal renseigner</p>`;
-  }
-  else if (validAddress === true) {
-    addressErrorMsg.innerHTML = `<p></p>`;
-  }
-  if (validCity === false ) {
-    cityErrorMsg.innerHTML = `<p>Le champ Ville est mal renseigner</p>`;
-  }
-  else if (validCity === true) {
-    cityErrorMsg.innerHTML = `<p></p>`;
-  }
-  if (validLastName === false ) {
-    lastNameErrorMsg.innerHTML = `<p>Le champ Nom est mal renseigner</p>`;
-  }
-  else if (validLastName === true) {
-    lastNameErrorMsg.innerHTML = `<p></p>`;
-  }
-  if (validFirstName === false ) {
-    firstNameErrorMsg.innerHTML = `<p>Le champ Prénom est mal renseigner</p>`;
-  }
-  else if (validFirstName === true) {
-    firstNameErrorMsg.innerHTML = `<p></p>`;
+  
+  if(!produitLocalStorage || produitLocalStorage.length < 1 ){
+    alert("Le panier est vide");
+  }else {
+    if (validAddress === true && validLastName === true && validFirstName === true && validEmail === true  && validCity === true ) {
+      postForm();
+    }
+    if (validEmail === false ) {
+      emailErrorMsg.innerHTML = `<p>Le champ email est mal renseigner</p>`;
+    }
+    else if (validEmail === true) {
+      emailErrorMsg.innerHTML = `<p></p>`;
+    }
+    if (validAddress === false ) {
+      addressErrorMsg.innerHTML = `<p>Le champ Address est mal renseigner</p>`;
+    }
+    else if (validAddress === true) {
+      addressErrorMsg.innerHTML = `<p></p>`;
+    }
+    if (validCity === false ) {
+      cityErrorMsg.innerHTML = `<p>Le champ Ville est mal renseigner</p>`;
+    }
+    else if (validCity === true) {
+      cityErrorMsg.innerHTML = `<p></p>`;
+    }
+    if (validLastName === false ) {
+      lastNameErrorMsg.innerHTML = `<p>Le champ Nom est mal renseigner</p>`;
+    }
+    else if (validLastName === true) {
+      lastNameErrorMsg.innerHTML = `<p></p>`;
+    }
+    if (validFirstName === false ) {
+      firstNameErrorMsg.innerHTML = `<p>Le champ Prénom est mal renseigner</p>`;
+    }
+    else if (validFirstName === true) {
+      firstNameErrorMsg.innerHTML = `<p></p>`;
+    }
   }
 });
 /*
