@@ -153,6 +153,9 @@ form.firstName.addEventListener("input", function () {
   if(reg.test(str)) {
     validFirstName = true;
   }
+  else {
+    validFirstName = false;
+  }
 })
 
 form.lastName.addEventListener("input", function () {
@@ -161,6 +164,9 @@ form.lastName.addEventListener("input", function () {
   if(reg.test(str)) {
     validLastName = true;
   }
+  else {
+    validLastName = false;
+  }
 })
 
 form.address.addEventListener("input", function () {
@@ -168,6 +174,9 @@ form.address.addEventListener("input", function () {
   let str = form.address.value;
   if(reg.test(str)) {
     validAddress = true;
+  }
+  else {
+    validAddress = false;
   }
 })
 
