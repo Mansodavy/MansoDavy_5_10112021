@@ -66,6 +66,9 @@ Alert empéchant la non séléction d'élément
     else if (colorArticles.selectedIndex < 1){
       window.alert("Erreur ! Veuillez choisir une couleur !");
     }
+    else if (quantityArticles.value > 100 ){
+      window.alert("Erreur ! Quantité trop importante !");
+    }
       if (quantityArticles.value > 0 && quantityArticles.value <=100 && colorArticles.selectedIndex > 0){
 
         
