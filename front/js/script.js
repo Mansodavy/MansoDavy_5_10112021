@@ -21,7 +21,7 @@ async function fillSection() {
 /*
 Promise avec un timer permettant d'afficher la list des produit 
 */
-const getListProduct = new Promise((resolve, reject) => {
+const getListProduct = new Promise(() => {
     setTimeout(() => {
         let result = getArticles ()
         .then(function (data){

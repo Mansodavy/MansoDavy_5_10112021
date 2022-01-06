@@ -1,11 +1,11 @@
 
 /*
-Récupération de tout les item dans le local storage "produit".
+Récupération dans le localstorage => tout les items "produit".
 */
 let produitLocalStorage = JSON.parse(localStorage.getItem("produit"));
-const positionEmptyCart = document.querySelector("#cart__items");
 /*
-Fonction permettant de récupérer et afficher les articles du locatstorage sur la page cart .
+Fonction permettant de récupérer les articles. 
+Par la suite les afficher grace au localstorage et en utilisant innerHTML sur la page cart.
 */
 function getCart() {
   for (let produit in produitLocalStorage) {
@@ -103,7 +103,7 @@ function modifyQuantity() {
 modifyQuantity();
 
 /*
-Fonction permetant de calculer le total du montant en euro et des articles dans le panier .
+Fonction permetant de calculer le montant total en euro et des articles dans le panier .
 */
 function total() {
   let elementquantity = document.querySelectorAll(".itemQuantity");
@@ -153,6 +153,9 @@ form.firstName.addEventListener("input", function () {
   if(reg.test(str)) {
     validFirstName = true;
   }
+  else {
+    validFirstName = false;
+  }
 })
 
 form.lastName.addEventListener("input", function () {
@@ -161,6 +164,9 @@ form.lastName.addEventListener("input", function () {
   if(reg.test(str)) {
     validLastName = true;
   }
+  else {
+    validLastName = false;
+  }
 })
 
 form.address.addEventListener("input", function () {
@@ -168,6 +174,9 @@ form.address.addEventListener("input", function () {
   let str = form.address.value;
   if(reg.test(str)) {
     validAddress = true;
+  }
+  else {
+    validAddress = false;
   }
 })
 
@@ -193,6 +202,10 @@ form.email.addEventListener("input", function () {
     
   }
 })
+/*
+Partie qui permet au click sur le bouton commander de vérifier les regex grace a la partie regex,
+Si les champ ne sont pas bon sa l'indique .
+*/
 let button_order = document.getElementById("order")
 button_order.addEventListener("click", (event) => {
   event.preventDefault();
@@ -285,6 +298,7 @@ function postForm() {
 
 /*
 Fonction permetant de clear le local storage (utile pour les test)
+Pas utilisé dans une partie du site en général.
 */
 function clearlocalstorage() {
   window.localStorage.clear();

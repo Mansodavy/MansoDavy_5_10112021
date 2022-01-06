@@ -5,7 +5,8 @@ let str = window.location.href;
 let url = new URL(str);
 let urlsearchparmid = url.searchParams.get("id");
 /*
-Fonction mettant le numéro de commande grace a l'id récupéré précédemment 
+Fonction mettant le numéro de commande grace a l'id,
+Récupéré précédemment sur la page dans la partie prévue pour avec une innerHTML
 */
 function confirmation(){
     let orderid = document.querySelector(".confirmation");
