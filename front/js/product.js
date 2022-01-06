@@ -33,6 +33,7 @@ function getArticle() {
 }
 /*
 Fonction qui prend les articles récupérer avec l'api et les place avec l'innerhtml
+Et par la suite appel la fonction add cart avec l'article
 */ 
 function GrabArticles(article){
   let ArticleImg = document.querySelector(".item__img");
