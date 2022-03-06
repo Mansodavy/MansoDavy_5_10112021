@@ -2,12 +2,12 @@
 Au chargement de la page appel de la fonction asynchrone fill section
 */
 window.onload = fillSection();
-const urlproduct = "http://localhost:3000/api/products";
+const urlProduct = "http://localhost:3000/api/products";
 /*
 Fonction asynchrone permettant de récupéré les articles dans l'api
 */
 async function getArticles() {
-    let articlesCatch = await fetch(urlproduct)
+    let articlesCatch = await fetch(urlProduct)
     return await articlesCatch.json();
 }
 /*

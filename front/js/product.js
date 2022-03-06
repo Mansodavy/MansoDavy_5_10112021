@@ -4,8 +4,8 @@ Déclaration de la variable article et récupération de l'id dans l'url
 let article = "";
 let str = window.location.href;
 let url = new URL(str);
-let urlsearchparmid = url.searchParams.get("id");
-const urlproduct = "http://localhost:3000/api/products/";
+let urlSearchParmId = url.searchParams.get("id");
+const urlProduct = "http://localhost:3000/api/products/";
 
 const colorArticles = document. querySelector("#colors");
 const quantityArticles = document.querySelector("#quantity");
@@ -14,7 +14,7 @@ getArticle();
 Fonction qui récupére les articles dans l'api 
 */
 function getArticle() {
-  fetch(urlproduct + urlsearchparmid)
+  fetch(urlProduct + urlSearchParmId)
   .then((res) => {
       return res.json();
   })
@@ -80,7 +80,7 @@ Alert empéchant la non séléction d'élément
 Paramétrage de chaques informations du produits
 */
   let optionsProduit = {
-      idProduit: urlsearchparmid,
+      idProduit: urlSearchParmId,
       couleurProduit: choiceColor,
       quantiteProduit: Number(choiceQuantity),
       nomProduit: article.name,
@@ -97,7 +97,7 @@ Vérification dans le localstorage les élément et les couleurs pour pouvoir fa
 */
   if (produitLocalStorage) {
     const resultFind = produitLocalStorage.find(
-        (resultat) => resultat.idProduit === urlsearchparmid && resultat.couleurProduit === choiceColor);
+        (resultat) => resultat.idProduit === urlSearchParmId && resultat.couleurProduit === choiceColor);
         if (resultFind) {
             let newQuantite =
             parseInt(optionsProduit.quantiteProduit) + parseInt(resultFind.quantiteProduit);
