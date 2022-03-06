@@ -106,20 +106,20 @@ modifyQuantity();
 Fonction permetant de calculer le montant total en euro et des articles dans le panier .
 */
 function total() {
-  let elementquantity = document.querySelectorAll(".itemQuantity");
-  if (elementquantity === null) {
+  let elementQuantity = document.querySelectorAll(".itemQuantity");
+  if (elementQuantity === null) {
     return;
   } else {
-    let lengthelement = elementquantity.length;
+    let lengthElement = elementQuantity.length;
     totalQuantity = 0;
-    for (var i = 0; i < lengthelement; ++i) {
-      totalQuantity += elementquantity[i].valueAsNumber;
+    for (var i = 0; i < lengthElement; ++i) {
+      totalQuantity += elementQuantity[i].valueAsNumber;
     }
     totalPrice = 0;
 
-    for (var i = 0; i < lengthelement; ++i) {
+    for (var i = 0; i < lengthElement; ++i) {
       totalPrice +=
-        elementquantity[i].valueAsNumber * produitLocalStorage[i].prixProduit;
+        elementQuantity[i].valueAsNumber * produitLocalStorage[i].prixProduit;
     }
 
     let productTotalQuantity = document.querySelector(".cart__price");
